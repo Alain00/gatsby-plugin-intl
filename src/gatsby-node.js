@@ -83,7 +83,7 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
           language,
           languages,
           messages,
-          routed,
+          routed: routed || !generateLocalizedRoutes,
           originalPath: page.path,
           redirect,
           defaultLanguage,
