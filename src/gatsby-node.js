@@ -71,16 +71,17 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
   }
 
   const generatePage = (routed, language) => {
-    const messages = getMessages(path, language)
-    const newPath = routed ? `/${language}${page.path}` : page.path
+    const lang = generateLocalizedRoutes ? language :  page.context.language;
+    const messages = getMessages(path, lang)
+    const newPath = routed ? `/${lang}${page.path}` : page.path
     return {
       ...page,
       path: newPath,
       context: {
         ...page.context,
-        language,
+        language: lang,
         intl: {
-          language,
+          language: lang,
           languages,
           messages,
           routed: generateLocalizedRoutes ? routed : page.context?.routed,
