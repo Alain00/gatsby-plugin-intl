@@ -83,7 +83,7 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
           language,
           languages,
           messages,
-          routed: routed || !generateLocalizedRoutes,
+          routed: generateLocalizedRoutes ? routed : page.context?.routed,
           originalPath: page.path,
           redirect,
           defaultLanguage,
@@ -92,11 +92,11 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
     }
   }
 
+  const newPage = generatePage(false, defaultLanguage)
+  deletePage(page)
+  createPage(newPage)
   
   if (generateLocalizedRoutes){
-    const newPage = generatePage(false, defaultLanguage)
-    deletePage(page)
-    createPage(newPage)
     languages.forEach(language => {
       const localePage = generatePage(true, language)
       const regexp = new RegExp("/404/?$")
